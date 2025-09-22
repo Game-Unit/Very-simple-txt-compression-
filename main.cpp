@@ -8,6 +8,7 @@
 #include <fstream>
 #include <string>
 #include <Vector>
+#include <cstdlib>
 
 int main()
 {
@@ -20,6 +21,14 @@ int main()
     FilePathList droppedFiles;
 
     CompretionKey ck;
+
+    const char* userProfile = std::getenv("USERPROFILE");
+    std::string outPathCo;
+    if (userProfile) outPathCo = std::string(userProfile) + "\\Downloads\\compressed.txt";
+    else outPathCo = "compressed.txt";
+    std::string outPathDe;
+    if (userProfile) outPathDe = std::string(userProfile) + "\\Downloads\\decompressed.txt";
+    else outPathDe = "decompressed.txt";
 
     SetTargetFPS(60);
     while (!WindowShouldClose())
@@ -79,7 +88,7 @@ int main()
                     }
                 }
 
-                std::ofstream outFile("C:/Users/NoahB/Downloads/compressed.txt");
+                std::ofstream outFile(outPathCo);
                 outFile << compressedText;
                 outFile << "\n";
                 for (int count : chracterCount)
@@ -162,7 +171,7 @@ int main()
                         }
                     }
 
-                    std::ofstream outFile("C:/Users/NoahB/Downloads/decompressed.txt");
+                    std::ofstream outFile(outPathDe);
                     outFile << decompresedText;
                     outFile.close();
                     file.close();
